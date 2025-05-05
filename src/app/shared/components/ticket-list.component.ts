@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Ticket } from "../../models/task.models";
 import { TicketsServices } from "../../core/services/tickets.services";
 import { CommonModule } from "@angular/common";
-import { mapToTicket } from "../ticket.mapper";
 
 
 @Component ({
@@ -21,7 +20,7 @@ export class TicketsListComponents implements OnInit {
         this.ticketsServices.getTickets().subscribe({
             next: (data) => {
                 console.log('Data', data);
-                this.ticket = data.todos.map(mapToTicket);
+                this.ticket = data.ticket;
             },
             error: (err) => console.error('Ticket data kunde inte hämtas:', err)
         })

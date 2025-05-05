@@ -4,8 +4,8 @@ export interface Ticket {
     title: string;
     description?:string;
     status: 'todo' | 'done';
-    priority: 'rea' | 'yellow' | 'green'; 
-    dudate: Date;
-    completed: Date; 
+    priority: 'read' | 'yellow' | 'green'; 
+    dudate: number;
+    completed: 'yes' | 'no'; 
 }
 

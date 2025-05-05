@@ -2,6 +2,7 @@
   <li *ngFor="let ticket of ticket">
     {{ ticket.title }} - {{ ticket.completed ? "Yes" : "No" }}
     <br />
+    {{ ticket.priority }}
   </li>
 </ul>
 <ng-template #noTickets>

@@ -4,7 +4,7 @@ export interface Project {
     id: number;
     name: string;
     description: string;
-    deadline: Date;
+    deadline: number;
     tickets: Ticket[];
 }
 
