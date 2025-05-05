@@ -1,0 +1,9 @@
+<ul *ngIf="ticket.length > 0; else noTickets">
+  <li *ngFor="let ticket of ticket">
+    {{ ticket.title }} - {{ ticket.completed ? "Yes" : "No" }}
+    <br />
+  </li>
+</ul>
+<ng-template #noTickets>
+  <p>Inga tickets kunde hittas.</p>
+</ng-template>
