@@ -1,0 +1,23 @@
+<select [(ngModel)]="statusFilter">
+  <option value="alla">Alla</option>
+  <option value="aktiva">Aktiva</option>
+  <option value="klara">Klara</option>
+</select>
+
+<ul>
+  <li *ngFor="let ticket of ticket | ticketFilter : statusFilter">
+    {{ ticket.title }} - Status:
+    {{ ticket.completed === "yes" ? "Klar" : "Ej klar" }}
+  </li>
+</ul>
+
+<ul *ngIf="ticket.length > 0; else noTickets">
+  <li *ngFor="let ticket of ticket">
+    {{ ticket.title }} - {{ ticket.completed ? "Yes" : "No" }}
+    <br />
+    {{ ticket.priority }}
+  </li>
+</ul>
+<ng-template #noTickets>
+  <p>Inga tickets kunde hittas.</p>
+</ng-template>

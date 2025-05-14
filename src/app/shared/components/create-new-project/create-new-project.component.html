@@ -1,0 +1,16 @@
+<h2>Skappa nytt projekt</h2>
+<form [formGroup]="form" (ngSubmit)="saveProject()">
+  <label for="name"
+    >Projectets namn/titel:
+    <input type="text" id="name" formControlName="name" />
+  </label>
+  <label for="description">
+    Projectets biskrivning:
+    <input type="text" id="description" formControlName="description" />
+  </label>
+  <label for="deadline">
+    Deadline:
+    <input type="date" id="deadline" formControlName="deadline" />
+  </label>
+  <button type="submit" [disabled]="form.invalid">Skappa</button>
+</form>

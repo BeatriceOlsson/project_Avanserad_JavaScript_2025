@@ -1,8 +1,0 @@
-<ul *ngIf="project.length > 0; else noProject">
-  <li *ngFor="let project of project">
-    {{ project.name }} - {{ project.description }}
-  </li>
-</ul>
-<ng-template #noProject>
-  <p>Inga tickets kunde hittas.</p>
-</ng-template>

@@ -1,0 +1,22 @@
+<h3>Redigera projekt</h3>
+<form [formGroup]="form" (ngSubmit)="saveProject()">
+  <label>
+    Namn:
+    <input formControlName="name" />
+  </label>
+  <br />
+
+  <label>
+    Beskrivning:
+    <textarea formControlName="description"></textarea>
+  </label>
+  <br />
+
+  <label>
+    Deadline:
+    <input type="date" formControlName="deadline" />
+  </label>
+  <br />
+
+  <button type="submit" [disabled]="form.invalid">Spara ändringar</button>
+</form>

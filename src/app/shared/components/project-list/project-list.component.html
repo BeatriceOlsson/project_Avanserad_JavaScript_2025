@@ -1,0 +1,26 @@
+<input type="text" [(ngModel)]="searchProject" placeholder="Sök projekt" />
+
+<ul>
+  <li *ngFor="let project of projects | projectFilter : searchProject">
+    {{ project.name }} - {{ project.description }}
+  </li>
+</ul>
+
+<ul *ngIf="projects.length > 0; else noProject">
+  <li *ngFor="let project of projects">
+    {{ project.name }} - {{ project.description }}
+    <br />
+    {{ project.deadline | date : "mediumDate" }}
+    <button (click)="edit(project)">Redigera</button>
+    <button (click)="delete(project.id)">Radera</button>
+  </li>
+</ul>
+
+<app-edit-project
+  *ngIf="selectedProject"
+  [projectEdit]="selectedProject"
+  (editCompleted)="editCompleted()"
+></app-edit-project>
+<ng-template #noProject>
+  <p>Inga tickets kunde hittas.</p>
+</ng-template>
