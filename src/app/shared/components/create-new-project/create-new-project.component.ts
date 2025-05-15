@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectsServices } from '../../../core/services/project.services';
 import { Project } from '../../../models/project.models';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 @Component({
   selector: 'app-create-new-project',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ProjectFormComponent],
   templateUrl: './create-new-project.component.html',
   styleUrl: './create-new-project.component.scss'
 })
@@ -23,13 +24,12 @@ export class CreateNewProjectComponent {
     });
   }
 
-  saveProject(): void {
-    const formValue = this.form.value;
+  saveProject(value: any): void {
     const newProject: Project = {
       id: 0,
-      name: formValue.name,
-      description: formValue.description,
-      deadline: new Date(formValue.deadline).getTime(),
+      name: value.name,
+      description: value.description,
+      deadline: new Date(value.deadline).getTime(),
       tickets: []
     };
     this.projectService.createProject(newProject).subscribe(() => {

@@ -14,40 +14,46 @@ export class ProjectsServices {
 
     constructor ( private http: HttpClient) {}
 
+    private getLocalprojects(): Project[] {
+        const data = localStorage.getItem('localProjects');
+        return data ? JSON.parse(data) : [];
+    }
+
+    private saveLocalProjects(projects: Project[]): void {
+        localStorage.setItem('localProjects', JSON.stringify(projects));
+    }
+
     getAllProject(): Observable<Project[]> {
         return this.http.get<{projects: Project[]}>(this.apiUrl).pipe(
             map(respons => {
                 const apiProjects = respons.projects || [];
-                const localProjects: Project[] = JSON.parse(localStorage.getItem('localProjects') || '[]');
+                const localProjects = this.getLocalprojects();
                 const combined = [...apiProjects, ...localProjects];
 
-                console.log('API: ', apiProjects);
-                console.log('LocalStorage: ', localProjects);
-                console.log('Alla project. ', combined);
                 return combined;
             }),
+            
             catchError((error) => {
                 console.log('Fel API: ', error);
-                const localProjects: Project[] = JSON.parse(localStorage.getItem('localProjects') || '[]');
-                return of ([]); //Kolla mer vad exakt denna funtionen gör och vad den behövs för de dubla minerna.
+                return of (this.getLocalprojects()); 
             })
         );
     }  
 
     createProject(project: Project): Observable<Project> {
-        const localProjects: Project[] = JSON.parse(localStorage.getItem('localProjects') || '[]');
-        const maxId = Math.max(0, ...localProjects.map( project => project.id || 0));
+        const localProjects = this.getLocalprojects();
+        const maxId = localProjects.length ? Math.max(...localProjects.map(p => p.id ?? 0)): 0;
         const newProject = {...project, id: maxId + 1};
         localProjects.push(newProject);
-        localStorage.setItem('localProjects', JSON.stringify(localProjects));
+        this.saveLocalProjects(localProjects);
 
         return of(newProject);
     }
 
     deleteProject(id: number): Observable<any> {
-        const localProjects: Project[] = JSON.parse(localStorage.getItem('localProjects') || '[]');
+        const localProjects = this.getLocalprojects();
         const uppdateProject = localProjects.filter(project => project.id !== id);
-        localStorage.setItem('localProjects', JSON.stringify(uppdateProject));
+        this.saveLocalProjects(uppdateProject);
 
         return this.http.delete(`${this.apiUrl}/${id}`).pipe(
             catchError (error => {
@@ -58,15 +64,15 @@ export class ProjectsServices {
     }
 
     uppdateProject(project: Project): Observable<Project> {
-        const localProjects: Project[] = JSON.parse(localStorage.getItem('localProjects') || '[]');
-        const index = localProjects.findIndex(project => project.id === project.id);
+        const localProjects = this.getLocalprojects();
+        const index = localProjects.findIndex(p => p.id === project.id);
         if (index !== -1) {
             localProjects[index] = project;
         }else {
             localProjects.push(project);
         }
 
-        localStorage.setItem('localProjects', JSON.stringify(localProjects));
+        this.saveLocalProjects(localProjects);
 
         return this.http.put<Project>(`${this.apiUrl}/${project.id}`, project).pipe(
             catchError(error => {

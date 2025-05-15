@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../models/project.models';
 import { ProjectsServices } from '../../../core/services/project.services';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ProjectFormComponent],
   templateUrl: './edit-project.component.html',
   styleUrl: './edit-project.component.scss'
 })
@@ -26,14 +27,14 @@ export class EditProjectComponent {
       id: [this.projectEdit.id],
       name: [this.projectEdit.name],
       description: [this.projectEdit.description],
-      deadline: [new Date(this.projectEdit.deadline).toISOString().substring(0, 10), Validators.required]
+      deadline: [new Date(this.projectEdit.deadline).toISOString().substring(0, 10)]
     });
   }
 
-  saveProject(): void {
+  saveProject(value: any): void {
     const uppdateProject: Project = {
-      ...this.form.value,
-      deadline: new Date(this.form.value.deadline).getTime(),
+      ...value,
+      deadline: new Date(value.deadline).getTime(),
       tickets: this.projectEdit.tickets || []
     };
 

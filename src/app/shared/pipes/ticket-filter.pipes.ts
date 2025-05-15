@@ -8,13 +8,15 @@ import { Ticket } from "../../models/task.models";
 })
 
 export class TicketFilterPipe implements PipeTransform {
-    transform(tickets: Ticket[], searchText: string ='', status: string = 'alla'): Ticket[] {
+    transform(tickets: Ticket[], status: string = 'alla'): Ticket[] {
         if (!tickets) return [];
 
         return tickets.filter(ticket => {
-            if (status === 'alla') return true;
-            if (status === 'aktiva') return ticket.completed === 'no';
-            if (status === 'klara') return ticket.completed === 'yes';
+            if (status !== 'alla') {
+                if (status === 'aktiva') return ticket.completed === 'no';
+                if (status === 'klara') return ticket.completed === 'yes';
+                return false;
+            }
             return true;
         })
     }

@@ -16,8 +16,22 @@
     {{ ticket.title }} - {{ ticket.completed ? "Yes" : "No" }}
     <br />
     {{ ticket.priority }}
+    <button (click)="edit(ticket)">Redigera</button>
+    <button (click)="delete(ticket.id)">Radera</button>
   </li>
 </ul>
+
+<app-edit-ticket
+  *ngIf="selectedTickets"
+  [ticketEdit]="selectedTickets"
+  (editCompleted)="handelEditComplete()"
+>
+</app-edit-ticket>
+
 <ng-template #noTickets>
   <p>Inga tickets kunde hittas.</p>
 </ng-template>
+
+<app-create-new-ticket
+  (tickedAdded)="handelTicketAdded()"
+></app-create-new-ticket>

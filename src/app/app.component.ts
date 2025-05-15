@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TicketsListComponent } from './shared/components/ticket-list/ticket-list.component';
-import { ProjectListComponent } from './shared/components/project-list/project-list.component';
-import { CreateNewProjectComponent } from './shared/components/create-new-project/create-new-project.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TicketsListComponent, ProjectListComponent, CreateNewProjectComponent],
+  imports: [RouterOutlet, TicketsListComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
