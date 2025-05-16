@@ -1,26 +1,54 @@
-<input type="text" [(ngModel)]="searchProject" placeholder="Sök projekt" />
+<mat-form-field appearance="outline" class="search-field">
+  <mat-label>Sök projekt</mat-label>
+  <input
+    matInput
+    type="text"
+    [(ngModel)]="searchProject"
+    placeholder="Namn eller beskrivning"
+  />
+</mat-form-field>
 
-<ul>
-  <li *ngFor="let project of projects | projectFilter : searchProject">
-    {{ project.name }} - {{ project.description }}
-  </li>
-</ul>
+<div class="project-grid">
+  <mat-card
+    *ngFor="let project of projects | projectFilter : searchProject"
+    class="project-card"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ project.name }}</mat-card-title>
+      <mat-card-subtitle
+        >Deadline:
+        {{ project.deadline | date : "mediumDate" }}</mat-card-subtitle
+      >
+    </mat-card-header>
 
-<ul *ngIf="projects.length > 0; else noProject">
-  <li *ngFor="let project of projects">
-    {{ project.name }} - {{ project.description }}
-    <br />
-    {{ project.deadline | date : "mediumDate" }}
-    <button (click)="edit(project)">Redigera</button>
-    <button (click)="delete(project.id)">Radera</button>
-  </li>
-</ul>
+    <mat-card-content>
+      <p>{{ project.description }}</p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="primary" (click)="edit(project)">
+        <mat-icon>edit</mat-icon> Redigera
+      </button>
+      <button mat-stroked-button color="warn" (click)="delete(project.id)">
+        <mat-icon>delete</mat-icon> Radera
+      </button>
+      <button
+        mat-flat-button
+        color="accent"
+        [routerLink]="['/projects', project.id]"
+      >
+        <mat-icon>visibility</mat-icon> Visa detaljer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
 <app-edit-project
   *ngIf="selectedProject"
   [projectEdit]="selectedProject"
   (editCompleted)="editCompleted()"
 ></app-edit-project>
+
 <ng-template #noProject>
-  <p>Inga tickets kunde hittas.</p>
+  <p>Inga projekt hittades.</p>
 </ng-template>

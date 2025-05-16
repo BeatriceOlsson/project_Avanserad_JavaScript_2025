@@ -6,6 +6,5 @@ import { ProjectsPageComponent } from './features/projects/projects.page/project
 export const routes: Routes = [
     {path: '', redirectTo: 'projects', pathMatch: 'full'},
     {path: 'projects', component: ProjectsPageComponent},
-    {path: 'project/new', component: CreateNewProjectComponent},
-    {path: 'tickets', component: TicketsListComponent}
+    {path: 'projects/:id', component: TicketsListComponent}
 ];

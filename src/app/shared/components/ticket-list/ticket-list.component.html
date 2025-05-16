@@ -1,37 +1,50 @@
-<select [(ngModel)]="statusFilter">
-  <option value="alla">Alla</option>
-  <option value="aktiva">Aktiva</option>
-  <option value="klara">Klara</option>
-</select>
+<mat-form-field appearance="outline" class="search-field">
+  <mat-label>Filtrera tickets</mat-label>
+  <mat-select [(ngModel)]="statusFilter">
+    <mat-option value="alla">Alla</mat-option>
+    <mat-option value="aktiva">Aktiva</mat-option>
+    <mat-option value="klara">Klara</mat-option>
+  </mat-select>
+</mat-form-field>
 
-<ul>
-  <li *ngFor="let ticket of ticket | ticketFilter : statusFilter">
-    {{ ticket.title }} - Status:
-    {{ ticket.completed === "yes" ? "Klar" : "Ej klar" }}
-  </li>
-</ul>
+<div class="ticket-grid">
+  <mat-card
+    *ngFor="let ticket of ticket | ticketFilter : statusFilter"
+    class="ticket-card"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ ticket.title }}</mat-card-title>
+      <mat-card-subtitle>
+        Status:
+        {{ ticket.completed === "yes" ? "Klar" : "Ej klar" }}
+      </mat-card-subtitle>
+    </mat-card-header>
 
-<ul *ngIf="ticket.length > 0; else noTickets">
-  <li *ngFor="let ticket of ticket">
-    {{ ticket.title }} - {{ ticket.completed ? "Yes" : "No" }}
-    <br />
-    {{ ticket.priority }}
-    <button (click)="edit(ticket)">Redigera</button>
-    <button (click)="delete(ticket.id)">Radera</button>
-  </li>
-</ul>
+    <mat-card-content>
+      <p><strong>Prioritet:</strong> {{ ticket.priority }}</p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button color="primary" (click)="edit(ticket)">
+        <mat-icon>edit</mat-icon> Redigera
+      </button>
+      <button mat-stroked-button color="warn" (click)="delete(ticket.id)">
+        <mat-icon>delete</mat-icon> Radera
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
 <app-edit-ticket
   *ngIf="selectedTickets"
   [ticketEdit]="selectedTickets"
   (editCompleted)="handelEditComplete()"
->
-</app-edit-ticket>
-
-<ng-template #noTickets>
-  <p>Inga tickets kunde hittas.</p>
-</ng-template>
+></app-edit-ticket>
 
 <app-create-new-ticket
   (tickedAdded)="handelTicketAdded()"
 ></app-create-new-ticket>
+
+<ng-template #noTickets>
+  <p>Inga tickets kunde hittas.</p>
+</ng-template>

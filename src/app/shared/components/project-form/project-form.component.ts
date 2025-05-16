@@ -1,34 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SharedMaterialModule } from '../../../models/disagn.modules';
 
 @Component({
   selector: 'app-project-form',
-  imports: [ReactiveFormsModule],
-  template: `
-    <form [formGroup]="form" (ngSubmit)="submitForm()">
-      <label>
-        Namn:
-        <input formControlName="name" placeholder="Projektnamn" required />
-      </label>
-      <br />
-
-      <label>
-        Beskrivning:
-        <textarea formControlName="description" placeholder="Beskrivning"></textarea>
-      </label>
-      <br />
-
-      <label>
-        Deadline:
-        <input type="date" formControlName="deadline" required />
-      </label>
-      <br />
-
-      <button type="submit" [disabled]="form.invalid">
-        {{ submitLabel }}
-      </button>
-    </form>
-  `,
+  imports: [ReactiveFormsModule, SharedMaterialModule, SharedMaterialModule],
+  templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss'
 })
 export class ProjectFormComponent {

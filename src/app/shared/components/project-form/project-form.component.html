@@ -1,1 +1,36 @@
-<p>project-form works!</p>
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="form-container">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Namn</mat-label>
+    <input matInput formControlName="name" placeholder="Projektnamn" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Beskrivning</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Beskrivning"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Deadline</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="deadline"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="form.invalid"
+  >
+    {{ submitLabel }}
+  </button>
+</form>

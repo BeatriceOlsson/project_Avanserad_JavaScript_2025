@@ -1,33 +1,34 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-ticket-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
-  template: `
-    <form [formGroup]="form" (ngSubmit)="submitForm()">
-      <input formControlName="title" placeholder="Titel" required />
-      <input formControlName="description" placeholder="Beskrivning" />
-      <input formControlName="dudate" type="date" />
-      <select formControlName="status">
-        <option value="">Välj status</option>
-        <option value="todo">Att göra</option>
-        <option value="done">Klar</option>
-      </select>
-      <select formControlName="priority">
-        <option value="">Välj prioritet</option>
-        <option value="low">Låg</option>
-        <option value="high">Hög</option>
-      </select>
-      <input type="checkbox" formControlName="completed" /> Klart
-      <button type="submit" [disabled]="form.invalid">Spara</button>
-    </form>
-  `,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  templateUrl: './ticket-form.component.html',
   styleUrl: './ticket-form.component.scss'
 })
 export class TicketFormComponent {
   @Input() form!: FormGroup;
+  @Input() submitLabel: string = 'Spara';
   @Output() submitt = new EventEmitter<any>();
 
   submitForm() {

@@ -1,1 +1,63 @@
-<p>ticket-form works!</p>
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="form-container">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Titel</mat-label>
+    <input
+      matInput
+      formControlName="title"
+      placeholder="Ticket titel"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Beskrivning</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Beskrivning"
+      rows="4"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Deadline</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="dudate"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option value="todo">Att göra</mat-option>
+      <mat-option value="done">Klar</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Prioritet</mat-label>
+    <mat-select formControlName="priority" required>
+      <mat-option value="red">Röd</mat-option>
+      <mat-option value="yellow">Gul</mat-option>
+      <mat-option value="green">Grön</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="completed" class="checkbox-full-width">
+    Klar
+  </mat-checkbox>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="form.invalid"
+  >
+    {{ submitLabel }}
+  </button>
+</form>

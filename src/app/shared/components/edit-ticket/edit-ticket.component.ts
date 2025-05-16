@@ -5,11 +5,12 @@ import { Ticket } from '../../../models/task.models';
 import { TicketsServices } from '../../../core/services/tickets.services';
 import { TicketFormService } from '../../../core/services/ticket-form.services';
 import { TicketFormComponent } from '../ticket-form/ticket-form.component';
+import { SharedMaterialModule } from '../../../models/disagn.modules';
 
 @Component({
   selector: 'app-edit-ticket',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TicketFormComponent],
+  imports: [CommonModule, ReactiveFormsModule, TicketFormComponent, SharedMaterialModule],
   templateUrl: './edit-ticket.component.html',
   styleUrl: './edit-ticket.component.scss'
 })

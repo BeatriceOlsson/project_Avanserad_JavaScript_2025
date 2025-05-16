@@ -5,11 +5,13 @@ import { CommonModule } from "@angular/common";
 import { EditProjectComponent } from "../edit-project/edit-project.component";
 import { FormsModule } from "@angular/forms";
 import { ProjectFilterPipe } from "../../pipes/project-filter.pipes";
+import { RouterModule } from "@angular/router";
+import { SharedMaterialModule } from "../../../models/disagn.modules";
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, EditProjectComponent, ProjectFilterPipe],
+  imports: [CommonModule, FormsModule, EditProjectComponent, ProjectFilterPipe, RouterModule, SharedMaterialModule],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss'
 })

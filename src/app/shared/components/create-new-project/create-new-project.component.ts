@@ -3,10 +3,11 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { ProjectsServices } from '../../../core/services/project.services';
 import { Project } from '../../../models/project.models';
 import { ProjectFormComponent } from '../project-form/project-form.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-create-new-project',
-  imports: [ReactiveFormsModule, ProjectFormComponent],
+  imports: [ReactiveFormsModule, ProjectFormComponent, RouterModule],
   templateUrl: './create-new-project.component.html',
   styleUrl: './create-new-project.component.scss'
 })

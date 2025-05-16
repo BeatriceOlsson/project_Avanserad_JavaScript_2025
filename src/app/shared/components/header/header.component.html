@@ -1,7 +1,31 @@
-<nav>
-  <a routerLink="/projects" routerLinkActive="active">Project</a>
-  <a routerLink="/projects/new" routerLinkActive="active"
-    >Skappa nytt project</a
+<mat-toolbar color="accent">
+  <span class="title">Projektplanering</span>
+  <span class="spacer"></span>
+
+  <button
+    mat-button
+    routerLink="/projects"
+    routerLinkActive="active"
+    aria-label="Projekt"
   >
-  <a routerLink="/tickets" routerLinkActive="active">Tickets</a>
-</nav>
+    <mat-icon>folder</mat-icon> Projekt
+  </button>
+
+  <button
+    mat-button
+    routerLink="/projects/new"
+    routerLinkActive="active"
+    aria-label="Skapa nytt projekt"
+  >
+    <mat-icon>add_circle</mat-icon> Skapa nytt projekt
+  </button>
+
+  <button
+    mat-button
+    routerLink="/tickets"
+    routerLinkActive="active"
+    aria-label="Tickets"
+  >
+    <mat-icon>assignment</mat-icon> Tickets
+  </button>
+</mat-toolbar>
