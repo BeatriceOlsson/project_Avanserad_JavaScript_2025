@@ -9,7 +9,10 @@
 </mat-form-field>
 
 <div class="project-grid">
-  <mat-card *ngFor="let project of projects()" class="project-card">
+  <mat-card
+    *ngFor="let project of projects() | projectFilter : searchProject"
+    class="project-card"
+  >
     <mat-card-header>
       <mat-card-title>{{ project.name }}</mat-card-title>
       <mat-card-subtitle
