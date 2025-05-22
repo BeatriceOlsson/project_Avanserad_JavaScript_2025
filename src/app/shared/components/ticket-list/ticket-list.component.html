@@ -1,15 +1,36 @@
-<mat-form-field appearance="outline" class="search-field">
-  <mat-label>Filtrera tickets</mat-label>
-  <mat-select [(ngModel)]="statusFilter">
-    <mat-option value="alla">Alla</mat-option>
-    <mat-option value="aktiva">Aktiva</mat-option>
-    <mat-option value="klara">Klara</mat-option>
-  </mat-select>
-</mat-form-field>
+<button mat-raised-button color="primary" (click)="sortByPriority()">
+  {{
+    sortPriority()
+      ? "Stäng av prioriteringssortering"
+      : "Sortera efter prioritet"
+  }}
+</button>
+<app-filter
+  [label]="'Sök tickets'"
+  [type]="'text'"
+  [placeholder]="'Skriv sökord...'"
+  [model]="searchTerm()"
+  (modelChange)="searchTerm.set($event)"
+/>
+
+<app-filter
+  [label]="'Filtrera tickets'"
+  [type]="'select'"
+  [options]="[
+    { value: 'alla', label: 'Alla' },
+    { value: 'aktiva', label: 'Aktiva' },
+    { value: 'klara', label: 'Klara' }
+  ]"
+  [model]="statusFilter()"
+  (modelChange)="statusFilter.set($event)"
+/>
 
 <div class="ticket-grid">
   <mat-card
-    *ngFor="let t of ticket() | ticketFilter : statusFilter()"
+    *ngFor="
+      let t of ticket()
+        | ticketFilter : statusFilter() : searchTerm() : sortPriority()
+    "
     [appPrioColor]="t.priority"
     class="ticket-card"
   >

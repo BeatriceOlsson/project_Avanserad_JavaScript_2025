@@ -1,8 +1,7 @@
-import { Component, inject, Input, Signal, signal } from "@angular/core";
+import { Component, inject, Input, signal, WritableSignal } from "@angular/core";
 import { Ticket } from "../../../models/task.models";
 import { TicketsServices } from "../../../core/services/tickets.service";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
 import { TicketFilterPipe } from "../../pipes/ticket-filter.pipes";
 import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
 import { CreateNewTicketComponent } from "../create-new-ticket/create-new-ticket.component";
@@ -10,13 +9,14 @@ import { ActivatedRoute, RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../../../models/disagn.modules";
 import { PrioColorDirective } from "../../directives/prio-color.directive";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { FilterComponent } from "../filter/filter.component";
 
 
 
 @Component ({
     selector: 'app-ticket-list',
     standalone: true,
-    imports: [CommonModule, FormsModule, TicketFilterPipe, EditTicketComponent, CreateNewTicketComponent, RouterModule,SharedMaterialModule, PrioColorDirective],
+    imports: [CommonModule, TicketFilterPipe, EditTicketComponent, CreateNewTicketComponent, RouterModule,SharedMaterialModule, PrioColorDirective, FilterComponent],
     templateUrl: './ticket-list.component.html',
     styleUrl: './ticket-list.component.scss'
 })
@@ -26,9 +26,11 @@ export class TicketsListComponent{
     private ticketsServices = inject(TicketsServices);
     private route = inject(ActivatedRoute);
 
-    statusFilter = signal<string> ('alla');
+    statusFilter: WritableSignal<string> = signal ('alla');
+    searchTerm: WritableSignal<string> = signal('');
     selectedTickets = signal<Ticket | null>(null);
     projectID = signal<number | null> (null);
+    sortPriority = signal(false);
 
     ticket = toSignal(this.ticketsServices.getTickets(), {initialValue: []});
 
@@ -60,4 +62,9 @@ export class TicketsListComponent{
     private reloadTickets() {
         this.ticket = toSignal(this.ticketsServices.getTickets(), {initialValue: []});
     }
+
+    sortByPriority() {
+        this.sortPriority.set(!this.sortPriority());
+    }
+    
 }

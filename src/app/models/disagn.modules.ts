@@ -23,7 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatIconModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
   ]
 })
 export class SharedMaterialModule {}

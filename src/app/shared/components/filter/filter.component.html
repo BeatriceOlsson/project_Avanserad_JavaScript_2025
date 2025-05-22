@@ -1,0 +1,21 @@
+<mat-form-field appearance="outline" class="seartch-field">
+  <mat-label>{{ label }}</mat-label>
+
+  <input
+    *ngIf="type === 'text'"
+    matInput
+    [placeholder]="placeholder"
+    [(ngModel)]="model"
+    (ngModelChange)="uppdateModul($event)"
+  />
+
+  <mat-select
+    *ngIf="type === 'select'"
+    [(ngModel)]="model"
+    (ngModelChange)="uppdateModul($event)"
+  >
+    <mat-option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

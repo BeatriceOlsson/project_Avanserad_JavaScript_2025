@@ -7,11 +7,12 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../../../models/disagn.modules";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { ProjectFilterPipe } from "../../pipes/project-filter.pipes";
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, EditProjectComponent, RouterModule, SharedMaterialModule],
+  imports: [CommonModule, FormsModule, EditProjectComponent, RouterModule, SharedMaterialModule, ProjectFilterPipe],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss'
 })
