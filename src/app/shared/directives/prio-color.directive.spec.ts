@@ -31,7 +31,7 @@ describe('PrioColorDirective', () => {
     }});
 
     expect(renderMock.setStyle).toHaveBeenCalledWith(
-      elementRefMock, 'border', '0.5rem solid rgb(175, 62, 62)'
+      elementRefMock.nativeElement, 'border', '0.5rem solid rgb(175, 62, 62)'
     );
   })
 });

@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { ProjectsServices } from './project.service';
 import { provideHttpClientTesting } from  '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ProjectsServices', () => {
   let service: ProjectsServices;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ProjectsServices, provideHttpClientTesting()]
+      providers: [ProjectsServices, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     });
     service = TestBed.inject(ProjectsServices);
     localStorage.clear();
