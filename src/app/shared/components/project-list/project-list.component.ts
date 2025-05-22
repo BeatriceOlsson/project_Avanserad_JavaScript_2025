@@ -1,37 +1,32 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Project } from "../../../models/project.models";
-import { ProjectsServices } from "../../../core/services/project.services";
+import { ProjectsServices } from "../../../core/services/project.service";
 import { CommonModule } from "@angular/common";
 import { EditProjectComponent } from "../edit-project/edit-project.component";
 import { FormsModule } from "@angular/forms";
-import { ProjectFilterPipe } from "../../pipes/project-filter.pipes";
 import { RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../../../models/disagn.modules";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, EditProjectComponent, ProjectFilterPipe, RouterModule, SharedMaterialModule],
+  imports: [CommonModule, FormsModule, EditProjectComponent, RouterModule, SharedMaterialModule],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.scss'
 })
-export class ProjectListComponent implements OnInit {
-  projects: Project[] = [];
+export class ProjectListComponent {
   selectedProject: Project | null = null;
-  
-  constructor( private projectService: ProjectsServices ) {}
-  
-  ngOnInit(): void {
-    this.loadProjects();
-  }
-      
   searchProject: string ='';
   deadlineFilter?: string;
+
+  private projectServise = inject(ProjectsServices);
+
+  projects = toSignal(this.projectServise.getAllProject(), {
+    initialValue: []
+  });
   
-  loadProjects(): void {
-    this.projectService.getAllProject().subscribe(projects => this.projects = projects);
-    console.log('Här hämtas projecten: ', this.projects);
-  }
+  constructor( private projectService: ProjectsServices ) {}
   
   edit(project: Project) {
     this.selectedProject = {...project};
@@ -39,10 +34,12 @@ export class ProjectListComponent implements OnInit {
 
   editCompleted(): void {
     this.selectedProject = null;
-    this.loadProjects();
+    this.projects = toSignal(this.projectService.getAllProject(), {initialValue: []});
   }
 
   delete(id: number) {
-    this.projectService.deleteProject(id).subscribe(() => this.loadProjects());
+    this.projectService.deleteProject(id).subscribe(() => {
+      this.projects = toSignal(this.projectService.getAllProject(), {initialValue: []});
+    });
   }
 }

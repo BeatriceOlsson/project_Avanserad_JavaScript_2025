@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from '../../../models/disagn.modules';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-project-form',
-  imports: [ReactiveFormsModule, SharedMaterialModule, SharedMaterialModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, SharedMaterialModule, SharedMaterialModule],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.scss'
 })

@@ -9,7 +9,10 @@ import { Ticket } from "../../models/task.models";
 
 export class TicketFilterPipe implements PipeTransform {
     transform(tickets: Ticket[], status: string = 'alla'): Ticket[] {
-        if (!tickets) return [];
+        if (!Array.isArray(tickets)) {
+            console.log('Ticket är inte en array.')
+            return [];  
+        } 
 
         return tickets.filter(ticket => {
             if (status !== 'alla') {

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Ticket } from '../../../models/task.models';
-import { TicketsServices } from '../../../core/services/tickets.services';
-import { TicketFormService } from '../../../core/services/ticket-form.services';
+import { TicketsServices } from '../../../core/services/tickets.service';
+import { TicketFormService } from '../../../core/services/ticket-form.service';
 import { TicketFormComponent } from '../ticket-form/ticket-form.component';
 import { SharedMaterialModule } from '../../../models/disagn.modules';
 
@@ -25,6 +25,7 @@ export class EditTicketComponent {
   ){}
 
   ngOnInit() {
+    if(!this.ticketEdit) return;
     this.form = this.ticketFormService.createTicketForm(this.ticketEdit);
   }
 
@@ -33,9 +34,7 @@ export class EditTicketComponent {
       ...fromValue,
       dudate: new Date(fromValue.dudate).getTime(),
     };
-
     this.ticketsServices.uppdateTicket(updateTicket).subscribe(() => {
-      console.log('Ticket uppdaterat: ', updateTicket);
       this.editCompleted.emit();
     })
   }
@@ -44,8 +43,7 @@ export class EditTicketComponent {
     if (!this.ticketEdit?.id) return;
   
     this.ticketsServices.deleteTicket(this.ticketEdit.id).subscribe(() => {
-      console.log('Ticket borttagen:', this.ticketEdit.id);
-      this.editCompleted.emit(); // Meddela att edit är klar, så att listan kan uppdateras och edit-komponenten stängas
-    });
+      this.editCompleted.emit();
+    })
   }
 }

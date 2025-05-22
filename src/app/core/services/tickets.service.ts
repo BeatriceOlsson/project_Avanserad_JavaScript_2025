@@ -21,7 +21,7 @@ export class TicketsServices {
         localStorage.setItem('localTickets', JSON.stringify(tickets));
     }
 
-    getTickets(): Observable<any> {
+    getTickets(): Observable<Ticket[]> {
         return this.http.get<any>(this.apiUrl).pipe(
             map(response => {
                 const apiTickets = response.ticket || [];
@@ -31,7 +31,7 @@ export class TicketsServices {
 
             catchError((error) => {
                 console.log('Fel API: ', error);
-                return of (this.getLocalTickets);
+                return of (this.getLocalTickets());
             })
         );
     }

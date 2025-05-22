@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TicketsServices } from '../../../core/services/tickets.services';
+import { TicketsServices } from '../../../core/services/tickets.service';
 import { Ticket } from '../../../models/task.models';
 import { CommonModule } from '@angular/common';
-import { TicketFormService } from '../../../core/services/ticket-form.services';
+import { TicketFormService } from '../../../core/services/ticket-form.service';
 import { TicketFormComponent } from '../ticket-form/ticket-form.component';
 
 @Component({
@@ -22,7 +22,6 @@ export class CreateNewTicketComponent {
     private ticketFormService: TicketFormService
   ){
     this.form = this.ticketFormService.createTicketForm();
-    this.form.reset();
   }
 
   saveTicket(formValue: any): void {
@@ -30,9 +29,7 @@ export class CreateNewTicketComponent {
       ...formValue,
       dudate: new Date(this.form.value.dudate).getTime()
     };
-
     this.ticketsService.createTicket(newTicket).subscribe(() => {
-      console.log('Ticket skappades: ', newTicket);
       this.form.reset();
       this.ticketAdded.emit();
     });

@@ -2,5 +2,5 @@
 
 export const ticketEnvironment = {
     production: false,
-    apiUrl: 'https://run.mocky.io/v3/05abc6ae-4ff6-4c63-bb57-b6fcf6f2442e'
+    apiUrl: 'https://run.mocky.io/v3/3f61ff72-db45-4311-970c-01830b74efb9'
 };

@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, Input, Signal, signal } from "@angular/core";
 import { Ticket } from "../../../models/task.models";
-import { TicketsServices } from "../../../core/services/tickets.services";
+import { TicketsServices } from "../../../core/services/tickets.service";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { TicketFilterPipe } from "../../pipes/ticket-filter.pipes";
@@ -8,61 +8,56 @@ import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
 import { CreateNewTicketComponent } from "../create-new-ticket/create-new-ticket.component";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { SharedMaterialModule } from "../../../models/disagn.modules";
+import { PrioColorDirective } from "../../directives/prio-color.directive";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 
 
 @Component ({
     selector: 'app-ticket-list',
     standalone: true,
-    imports: [CommonModule, FormsModule, TicketFilterPipe, EditTicketComponent, CreateNewTicketComponent, RouterModule,SharedMaterialModule],
-    templateUrl: './ticket-list.component.html'
+    imports: [CommonModule, FormsModule, TicketFilterPipe, EditTicketComponent, CreateNewTicketComponent, RouterModule,SharedMaterialModule, PrioColorDirective],
+    templateUrl: './ticket-list.component.html',
+    styleUrl: './ticket-list.component.scss'
 })
 
-export class TicketsListComponent implements OnInit {
-    ticket: Ticket[] = [];
-    statusFilter: string = 'alla';
-    selectedTickets: Ticket | null = null;
-    projectID: number | null = null;
+export class TicketsListComponent{
+    @Input() ticketEdit: Ticket | null=null;
+    private ticketsServices = inject(TicketsServices);
+    private route = inject(ActivatedRoute);
 
-    constructor(
-        private ticketsServices: TicketsServices,
-        private route: ActivatedRoute
-    ) {}
+    statusFilter = signal<string> ('alla');
+    selectedTickets = signal<Ticket | null>(null);
+    projectID = signal<number | null> (null);
 
-    ngOnInit(): void {
+    ticket = toSignal(this.ticketsServices.getTickets(), {initialValue: []});
+
+    constructor() {
         this.route.paramMap.subscribe(param => {
             const id = param.get('id');
-            this.projectID = id !== null ? parseInt(id, 10) : null
-        });
-        this.loadTickets();
-    }
-
-    loadTickets(): void {
-        this.ticketsServices.getTickets().subscribe({
-            next: (data) => {
-                console.log('Data', data);
-                this.ticket = data;
-            },
-            error: (err) => console.error('Ticket data kunde inte hämtas:', err)
+            this.projectID.set(id !== null ? parseInt(id, 10) : null);
         });
     }
 
     edit(ticket: Ticket): void {
-        this.selectedTickets = ticket;
+        this.selectedTickets.set (ticket);
     }
 
     handelEditComplete(): void {
-        this.selectedTickets = null;
-        this.loadTickets();
+        this.selectedTickets.set(null);
     }
 
     delete(id: number): void {
         this.ticketsServices.deleteTicket(id).subscribe(() => {
-            this.loadTickets();
+            this.reloadTickets();
         });
     }
 
     handelTicketAdded(): void {
-        this.loadTickets();
+        this.reloadTickets();
+    }
+
+    private reloadTickets() {
+        this.ticket = toSignal(this.ticketsServices.getTickets(), {initialValue: []});
     }
 }

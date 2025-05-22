@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProjectsServices } from '../../../core/services/project.services';
+import { ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { ProjectsServices } from '../../../core/services/project.service';
 import { Project } from '../../../models/project.models';
 import { ProjectFormComponent } from '../project-form/project-form.component';
+import { ProjectFormService } from '../../../core/services/project-form.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -15,14 +16,10 @@ export class CreateNewProjectComponent {
   form: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private projectFormService: ProjectFormService,
     private projectService: ProjectsServices
   ){
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      description: [''],
-      deadline: ['', Validators.required]
-    });
+    this.form = this.projectFormService.createProjectForm();
   }
 
   saveProject(value: any): void {
@@ -33,9 +30,10 @@ export class CreateNewProjectComponent {
       deadline: new Date(value.deadline).getTime(),
       tickets: []
     };
-    this.projectService.createProject(newProject).subscribe(() => {
-      console.log('Project spakades: ', newProject);
+
+    this.projectService.createProject(newProject).subscribe(()=> {
       this.form.reset();
-    });
+    })
+
   }
 }

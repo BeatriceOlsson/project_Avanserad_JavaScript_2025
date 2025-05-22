@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Project } from '../../../models/project.models';
-import { ProjectsServices } from '../../../core/services/project.services';
+import { ProjectsServices } from '../../../core/services/project.service';
 import { ProjectFormComponent } from '../project-form/project-form.component';
+import { ProjectFormService } from '../../../core/services/project-form.service';
 
 @Component({
   selector: 'app-edit-project',
@@ -18,17 +19,12 @@ export class EditProjectComponent {
   form!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private projectsServices: ProjectsServices
+    private projectsServices: ProjectsServices,
+    private projectFromServices: ProjectFormService
   ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      id: [this.projectEdit.id],
-      name: [this.projectEdit.name],
-      description: [this.projectEdit.description],
-      deadline: [new Date(this.projectEdit.deadline).toISOString().substring(0, 10)]
-    });
+    this.form = this.projectFromServices.createProjectForm(this.projectEdit);
   }
 
   saveProject(value: any): void {
@@ -37,9 +33,7 @@ export class EditProjectComponent {
       deadline: new Date(value.deadline).getTime(),
       tickets: this.projectEdit.tickets || []
     };
-
     this.projectsServices.uppdateProject(uppdateProject).subscribe(() => {
-      console.log('Project uppdaterat: ', uppdateProject);
       this.editCompleted.emit();
     })
   }

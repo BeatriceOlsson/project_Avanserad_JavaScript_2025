@@ -9,26 +9,31 @@
 
 <div class="ticket-grid">
   <mat-card
-    *ngFor="let ticket of ticket | ticketFilter : statusFilter"
+    *ngFor="let t of ticket() | ticketFilter : statusFilter()"
+    [appPrioColor]="t.priority"
     class="ticket-card"
   >
     <mat-card-header>
-      <mat-card-title>{{ ticket.title }}</mat-card-title>
+      <mat-card-title>{{ t.title }}</mat-card-title>
       <mat-card-subtitle>
         Status:
-        {{ ticket.completed === "yes" ? "Klar" : "Ej klar" }}
+        {{ t.completed === "yes" ? "Klar" : "Ej klar" }}
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
-      <p><strong>Prioritet:</strong> {{ ticket.priority }}</p>
+      <p><strong>Biskrivning:</strong> {{ t.description }}</p>
+    </mat-card-content>
+
+    <mat-card-content>
+      <p><strong>Prioritet:</strong> {{ t.priority }}</p>
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <button mat-stroked-button color="primary" (click)="edit(ticket)">
+      <button mat-stroked-button color="primary" (click)="edit(t)">
         <mat-icon>edit</mat-icon> Redigera
       </button>
-      <button mat-stroked-button color="warn" (click)="delete(ticket.id)">
+      <button mat-stroked-button color="warn" (click)="delete(t.id)">
         <mat-icon>delete</mat-icon> Radera
       </button>
     </mat-card-actions>
@@ -36,8 +41,8 @@
 </div>
 
 <app-edit-ticket
-  *ngIf="selectedTickets"
-  [ticketEdit]="selectedTickets"
+  *ngIf="selectedTickets()"
+  [ticketEdit]="selectedTickets()!"
   (editCompleted)="handelEditComplete()"
 ></app-edit-ticket>
 
