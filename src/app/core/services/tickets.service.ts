@@ -4,7 +4,9 @@ import { catchError, Observable, map, of } from "rxjs";
 import { ticketEnvironment } from "../../../environments/ticket.environments";
 import { Ticket } from "../../models/task.models";
 
-
+interface TicketApi {
+    ticket: Ticket[];
+}
 @Injectable ({ providedIn: 'root'})
 
 export class TicketsServices {
@@ -14,7 +16,7 @@ export class TicketsServices {
 
     private getLocalTickets(): Ticket[] {
         const data = localStorage.getItem('localTickets');
-        return data ? JSON.parse(data) : [];
+        return data ? (JSON.parse(data) as Ticket []) : [];
     }
 
     private saveLocalTickets(tickets: Ticket[]): void {
@@ -22,7 +24,7 @@ export class TicketsServices {
     }
 
     getTickets(): Observable<Ticket[]> {
-        return this.http.get<any>(this.apiUrl).pipe(
+        return this.http.get<TicketApi>(this.apiUrl).pipe(
             map(response => {
                 const apiTickets = response.ticket || [];
                 const localTickets = this.getLocalTickets();

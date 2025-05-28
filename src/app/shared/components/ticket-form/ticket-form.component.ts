@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from '../../../models/disagn.modules';
+import { Ticket } from '../../../models/task.models';
 
 @Component({
   selector: 'app-ticket-form',
@@ -15,7 +16,7 @@ import { SharedMaterialModule } from '../../../models/disagn.modules';
 export class TicketFormComponent {
   @Input() form!: FormGroup;
   @Input() submitLabel: string = 'Spara';
-  @Output() submitt = new EventEmitter<any>();
+  @Output() submitt = new EventEmitter<Ticket>();
 
   submitForm() {
     if (this.form.valid) {
