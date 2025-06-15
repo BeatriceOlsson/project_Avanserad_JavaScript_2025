@@ -33,6 +33,7 @@ export class EditTicketComponent {
   saveTicket(fromValue: any): void {
     const updateTicket: Ticket ={
       ...fromValue,
+      id: this.ticketEdit.id,
       dudate: new Date(fromValue.dudate).getTime(),
     };
     this.ticketsServices.uppdateTicket(updateTicket).subscribe(() => {
