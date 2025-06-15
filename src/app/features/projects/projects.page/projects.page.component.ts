@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './projects.page.component.html',
   styleUrl: './projects.page.component.scss'
 })
+
 export class ProjectsPageComponent {
 
 }

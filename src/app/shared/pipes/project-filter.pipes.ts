@@ -7,6 +7,7 @@ import { Project } from "../../models/project.models";
     standalone: true
 })
 
+//Filtrerar Projeckt baserat på sökt ord.
 export class ProjectFilterPipe implements PipeTransform {
     transform(projects: Project[], seartText: string): Project[] {
         if (!projects || !seartText){

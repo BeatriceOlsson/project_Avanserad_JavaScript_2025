@@ -18,6 +18,7 @@ export class EditProjectComponent {
   @Output() editCompleted = new EventEmitter<void>();
   form!: FormGroup;
 
+  //Sparar uppdateringar användaren gjort till ett existerande project.
   constructor(
     private projectsServices: ProjectsServices,
     private projectFromServices: ProjectFormService

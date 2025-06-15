@@ -6,6 +6,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('ProjectsServices', () => {
   let service: ProjectsServices;
 
+  //Tästar att skappa ett nyt project med TestBed där localStorage rensas, ett project skappas sen testas det att projectets har skappats korect.
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ProjectsServices, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]

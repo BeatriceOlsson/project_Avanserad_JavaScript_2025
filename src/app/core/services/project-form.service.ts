@@ -8,6 +8,7 @@ import { Project } from '../../models/project.models';
 export class ProjectFormService {
   constructor(private fb: FormBuilder) { }
 
+  //Skappar en standad för när man skappar ett project
   createProjectForm(project?: Project): FormGroup {
     return this.fb.group({
       id: [project?.id],

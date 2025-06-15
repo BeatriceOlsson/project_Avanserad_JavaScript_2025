@@ -9,6 +9,7 @@ export class PrioColorDirective implements OnChanges {
 
   constructor(private element: ElementRef, private renderer: Renderer2 ) { }
 
+  //Funtion för att sätta färg runt kanterna av ticket box baserat på prioritering.
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['appPrioColor']) {
       this.setColor(this.appPrioColor);

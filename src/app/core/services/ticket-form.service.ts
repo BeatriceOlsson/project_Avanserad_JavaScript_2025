@@ -12,6 +12,7 @@ export class TicketFormService {
         private fb: FormBuilder
     ){}
 
+    //Skappar en standad för när man skappar en ticket
     createTicketForm(ticket?: Ticket): FormGroup {
         return this.fb.group({
             id: [ticket?.id ],

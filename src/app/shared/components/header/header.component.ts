@@ -8,6 +8,7 @@ import { SharedMaterialModule } from '../../../models/disagn.modules';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
+//Håller menyn i HTML.
 export class HeaderComponent {
 
 }

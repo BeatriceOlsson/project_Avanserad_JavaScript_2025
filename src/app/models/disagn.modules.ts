@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 
+//För att slippa impotera Material IU komponänter i varge komponent är de samlade här.
 @NgModule({
   exports: [
     MatToolbarModule,

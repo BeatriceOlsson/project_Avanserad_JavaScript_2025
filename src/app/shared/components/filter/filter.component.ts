@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './filter.component.scss'
 })
 export class FilterComponent {
+
+  //Hanterar data från filter och hanterar den.
   @Input() label: string = 'filter';
   @Input() placeholder: string = '';
   @Input() type: 'text' | 'select' = 'text';
@@ -19,7 +21,6 @@ export class FilterComponent {
   @Output() modelChange = new EventEmitter<string>();
 
   uppdateModul(value: string) {
-    console.log(value);
     this.modelChange.emit(value);
   }
 }

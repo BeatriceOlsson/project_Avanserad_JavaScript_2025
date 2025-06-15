@@ -13,6 +13,8 @@ import { TicketFormComponent } from '../ticket-form/ticket-form.component';
   templateUrl: './create-new-ticket.component.html',
   styleUrl: './create-new-ticket.component.scss',
 })
+
+//Tar in formulär datan användaren skappat för att behandla det och skickar datan till server för att få det sparat.
 export class CreateNewTicketComponent {
   @Output() ticketAdded = new EventEmitter<void>();
   form: FormGroup;

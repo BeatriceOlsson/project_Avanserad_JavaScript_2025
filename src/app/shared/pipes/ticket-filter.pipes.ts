@@ -8,6 +8,7 @@ import { Ticket } from "../../models/task.models";
 })
 
 export class TicketFilterPipe implements PipeTransform {
+    //Ger möjlighet att prioritera tickets baserat på färgen den har. Retunerar sifror och soterat baserat på sifrorna de tilldelats.
     private prioValue(priority: string): number {
         switch(priority?.toLowerCase()) {
             case 'red': return 3;
@@ -22,6 +23,7 @@ export class TicketFilterPipe implements PipeTransform {
     }
 
     transform(tickets: Ticket[], status: string = 'alla', searchTerm: string = '', sortByPriority: boolean = false): Ticket[] {
+        //Kollar type på värdet som skickats.
         if (!Array.isArray(tickets)) {
             console.log('Ticket är inte en array.')
             return [];  
@@ -29,6 +31,7 @@ export class TicketFilterPipe implements PipeTransform {
 
         const lowerCaseSeartch = searchTerm.toLowerCase()
 
+        //Går igenom och retunerar de tickets som pasar in på filteringen om på status eller ord i titell eller biskrivning.
         const filterd = tickets.filter(ticket => {
             if (status !== 'alla') {
                 if (status === 'aktiva') return ticket.completed === 'no';
@@ -42,6 +45,8 @@ export class TicketFilterPipe implements PipeTransform {
             }
             return status && searchPass;
         });
+
+        //Kallar på filtrering av sotering 
         if (sortByPriority){
             return this.sortByPriority(filterd);
         } else{

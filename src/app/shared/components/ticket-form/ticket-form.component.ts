@@ -16,11 +16,12 @@ import { Ticket } from '../../../models/task.models';
 export class TicketFormComponent {
   @Input() form!: FormGroup;
   @Input() submitLabel: string = 'Spara';
-  @Output() submitt = new EventEmitter<Ticket>();
+  @Output() submitted = new EventEmitter<Ticket>();
 
+  //Hanterar formulär data från användare, kontrolerar datan och skickar den vidare för att sparas.
   submitForm() {
     if (this.form.valid) {
-      this.submitt.emit(this.form.value);
+      this.submitted.emit(this.form.value);
     }
   }
 }

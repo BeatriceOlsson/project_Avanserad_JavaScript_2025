@@ -15,6 +15,7 @@ describe('PrioColorDirective', () => {
     expect(directive).toBeTruthy();
   });
 
+  //Skrivet test för att se att fär röd sätts på prio röd.
   it('Kontrolera korect färg för prio röd', () => {
     const elementRefMock = {
       nativeElement: document.createElement('div')

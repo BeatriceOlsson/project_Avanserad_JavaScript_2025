@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 export class CreateNewProjectComponent {
   form: FormGroup;
 
+  //Tar in datan från project formulär, plaserar datan på represetive plats (id 0 är tillfäligt) och skickar för att sparas.
   constructor(
     private projectFormService: ProjectFormService,
     private projectService: ProjectsServices

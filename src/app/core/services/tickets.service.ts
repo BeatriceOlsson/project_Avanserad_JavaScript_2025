@@ -14,6 +14,7 @@ export class TicketsServices {
 
     constructor(private http: HttpClient) {}
 
+    //Hämmta eller spara ticket i localStorage.
     private getLocalTickets(): Ticket[] {
         const data = localStorage.getItem('localTickets');
         return data ? (JSON.parse(data) as Ticket []) : [];
@@ -23,6 +24,7 @@ export class TicketsServices {
         localStorage.setItem('localTickets', JSON.stringify(tickets));
     }
 
+    //Hemta datta för tickets från både DB och localStorage. Lösning då vi inte kan skicka API till DB för lagring eller uppdatering.
     getTickets(): Observable<Ticket[]> {
         return this.http.get<TicketApi>(this.apiUrl).pipe(
             map(response => {
@@ -38,6 +40,7 @@ export class TicketsServices {
         );
     }
 
+    //Hantering av skappande av ny ticket, radera data och uppdatera datan av ticket.
     createTicket(ticket: Ticket): Observable<Ticket> {
         const localTickets = this.getLocalTickets();
         const maxId = localTickets.length ? Math.max(...localTickets.map(t => t.id ?? 0)): 0;

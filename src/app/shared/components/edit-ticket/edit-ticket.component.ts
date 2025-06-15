@@ -24,6 +24,7 @@ export class EditTicketComponent {
     private ticketFormService: TicketFormService
   ){}
 
+  //Kollar om ticket redan fins och sparar då förändringarna from formuläret, samt raderar project om användaren önskar.
   ngOnInit() {
     if(!this.ticketEdit) return;
     this.form = this.ticketFormService.createTicketForm(this.ticketEdit);

@@ -29,6 +29,7 @@ export class ProjectListComponent {
   
   constructor( private projectService: ProjectsServices ) {}
   
+  //Anroppar konstruktor när användaren väljer att uppdatera eller radera project.
   edit(project: Project) {
     this.selectedProject = {...project};
   }

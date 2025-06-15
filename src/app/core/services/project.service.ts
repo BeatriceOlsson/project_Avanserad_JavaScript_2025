@@ -14,6 +14,7 @@ export class ProjectsServices {
 
     constructor ( private http: HttpClient) {}
 
+    //Hämmta eller spara project i localStorage.
     private getLocalprojects(): Project[] {
         const data = localStorage.getItem('localProjects');
         return data ? JSON.parse(data) : [];
@@ -23,6 +24,7 @@ export class ProjectsServices {
         localStorage.setItem('localProjects', JSON.stringify(projects));
     }
 
+    //Hemta datta för project från både DB och localStorage. Lösning då vi inte kan skicka API till DB för lagring eller uppdatering.
     getAllProject(): Observable<Project[]> {
         return this.http.get<{projects: Project[]}>(this.apiUrl).pipe(
             map(respons => {
@@ -40,6 +42,7 @@ export class ProjectsServices {
         );
     }  
 
+    //Hantering av skappande av ny project, radera data och uppdatera datan av project.
     createProject(project: Project): Observable<Project> {
         const localProjects = this.getLocalprojects();
         const maxId = localProjects.length ? Math.max(...localProjects.map(p => p.id ?? 0)): 0;

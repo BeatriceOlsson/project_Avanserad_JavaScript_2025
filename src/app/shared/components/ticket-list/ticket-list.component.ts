@@ -26,6 +26,7 @@ export class TicketsListComponent{
     private ticketsServices = inject(TicketsServices);
     private route = inject(ActivatedRoute);
 
+    //Signals för att läsa, skriva och reagera på förändring i HTML.
     statusFilter: WritableSignal<string> = signal ('alla');
     searchTerm: WritableSignal<string> = signal('');
     selectedTickets = signal<Ticket | null>(null);
@@ -34,6 +35,7 @@ export class TicketsListComponent{
 
     ticket = toSignal(this.ticketsServices.getTickets(), {initialValue: []});
 
+    //Kallar på olicka funtioner med ticket id och tar emot datan efter.
     constructor() {
         this.route.paramMap.subscribe(param => {
             const id = param.get('id');

@@ -12,6 +12,7 @@ describe('TicketsService - getLocalTicket', () => {
     expect(service).toBeTruthy();
   });
 
+  //Testar både att det inte fins någon ticket i mock innan en domy skappas och sppas. Kollar sen antal tickets samt titel på ticket.
   it('få tom lista från loclalStorage', () => {
     const result = (service as any).getLocalTickets();
     expect(result).toEqual([]);
