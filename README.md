@@ -32,6 +32,6 @@ Utmaningar i utvecklingen har varigt att man fått information för sent och tro
 
 Skärmdump:
 
-![Projektsida](assets/project.png)
-![SkappaProject](assets/create_project.png)
-![Tickets](assets/tickets.png)
+![Projektsida](screenshots/project.png)
+![SkappaProject](screenshots/create_project.png)
+![Tickets](screenshots/tickets.png)
