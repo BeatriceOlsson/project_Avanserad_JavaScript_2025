@@ -56,12 +56,7 @@ export class TicketsServices {
         const uppdateTickets = localTickets.filter(ticket => ticket.id !== id);
         this.saveLocalTickets(uppdateTickets);
     
-        return this.http.delete(`${this.apiUrl}/${id}`).pipe(
-            catchError (error => {
-                console.error('Error uppstog vid botagande av ticket: ', error);
-                return of(null);
-            })
-        );
+        return of (true);
     }
 
     uppdateTicket(ticket: Ticket): Observable<Ticket> {
@@ -75,11 +70,6 @@ export class TicketsServices {
     
         this.saveLocalTickets(localTickets);
     
-        return this.http.put<Ticket>(`${this.apiUrl}/${ticket.id}`, ticket).pipe(
-            catchError(error => {
-                console.error('Error uppstog vid uppdatering av ticket: ', error);
-                return of(ticket);
-            })
-        )
+        return of(ticket);
     }
 }

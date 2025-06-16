@@ -58,12 +58,7 @@ export class ProjectsServices {
         const uppdateProject = localProjects.filter(project => project.id !== id);
         this.saveLocalProjects(uppdateProject);
 
-        return this.http.delete(`${this.apiUrl}/${id}`).pipe(
-            catchError (error => {
-                console.error('Error uppstog vid botagande av project: ', error);
-                return of(null);
-            })
-        );
+        return of(null);
     }
 
     uppdateProject(project: Project): Observable<Project> {
@@ -77,11 +72,6 @@ export class ProjectsServices {
 
         this.saveLocalProjects(localProjects);
 
-        return this.http.put<Project>(`${this.apiUrl}/${project.id}`, project).pipe(
-            catchError(error => {
-                console.error('Error uppstog vid uppdatering av Project: ', error);
-                return of(project);
-            })
-        )
+        return of(project);
     }
 }
